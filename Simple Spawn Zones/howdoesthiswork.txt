@@ -1,0 +1,26 @@
+go to lua/autorun/sh_safezones.lua (you can open it with notepad if you dont have a lua editing program)
+
+you will see this:
+
+SafezonesConfig = {
+["ProtectionDelay"] = 3, -- how long will they remain spawn protected after leaving a safezone box
+["RemoveProps"] = true, -- do we want to delete props that enter the zones
+["RemoveVehicles"] = true, -- do we want to delete vehicles that enter the zones, be careful with this if you run an rp server with cars
+["RemoveNPCs"] = false, -- do we want to delete npcs that enter the spawn area
+}
+
+Safezones = {
+["Box1"] = {Vector(11975, 4788, -410), Vector(11594, 6594, -200)},
+["Box2"] = {Vector(6452, 11320, -410), Vector(7684, 12696, -250)},
+}
+
+
+
+Change config options as needed.  Remember to put a comma after the end of every entry since they are lua tables and will error out if you miss one. eg. ["Box1"] = {Vector(11975, 4788, -410), Vector(11594, 6594, -200)}, <----- THIS COMMA NEEDS TO BE HERE
+
+
+While ingame you can open console and type safezone_grablocation into it, this will print the location that your crosshair is pointing at.
+Then you just copy paste that code into the table and you should be good to go
+
+
+That should be all you need to know, if you have any problems comment on the scriptfodder page or open a support ticket.  I usually don't accept random adds on steam so don't waste your time adding me.

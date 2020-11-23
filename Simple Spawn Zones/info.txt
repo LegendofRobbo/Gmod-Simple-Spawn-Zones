@@ -1,0 +1,15 @@
+"AddonInfo"
+{
+	"name" "Square Safezones"
+	"author_name" "LegendofRobbo"
+	"info" "
+{
+	"description": "Description",
+	"type": "map",
+	"tags": 
+	[
+		"scenic",
+		"realism"
+	]
+}"
+}

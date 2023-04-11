@@ -8,6 +8,7 @@ SafezonesConfig = {
 	["TransparencyEffect"] = true, -- should spawn protected players be transparent?
 	["InvisibleSpawnBoxes"] = false, -- should the spawn protection boxes be invisible?
 	["BlockTracesToPlayer"] = false, -- stops traces from being able to hit the player, this will make them unable to be arrested, shot, cuffed, kidnapped etc
+	["BoxMaterial"] = Material("effects/com_shield003a"), -- what material should we use for the safe zones? Refractive materials will appear VERY broken, only use transparent materials. Also, we wrap the material in the Material() function like so, it's more performant to precache it like this.'
 }
 
 -- the actual boxes, needs to be 2 vectors seperated by a comma as you can see below
@@ -37,6 +38,7 @@ Safezones = {
 			["TransparencyEffect"] = true,
 			["InvisibleSpawnBoxes"] = false,
 			["BlockTracesToPlayer"] = false,
+			["BoxMaterial"] = Material("effects/comball_tape"),
 		}}
 	},
 
@@ -95,7 +97,7 @@ local function DrawSpawnBoxes()
 			end
 		end
 		if BoxConfig["InvisibleSpawnBoxes"] then return end
-		render.SetMaterial( Material("effects/com_shield003a") )
+		render.SetMaterial( BoxConfig["BoxMaterial"] )
 		render.DrawBox( v[2], Angle(0,0,0), Vector(0,0,0), v[1] - v[2], Color(255,0,0, 100), true )
 	end
 end

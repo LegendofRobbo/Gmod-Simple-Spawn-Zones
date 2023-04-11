@@ -63,7 +63,7 @@ if CLIENT then
 
 -- use this to easily grab locations for your spawn boxes
 local function GrabLoc()
-print("Vector( "..math.floor(LocalPlayer():GetEyeTrace().HitPos.x)..", "..math.floor(LocalPlayer():GetEyeTrace().HitPos.y)..", "..math.floor(LocalPlayer():GetEyeTrace().HitPos.z).." )")
+print("Vector( " .. math.floor(LocalPlayer():GetEyeTrace().HitPos.x) .. ", " .. math.floor(LocalPlayer():GetEyeTrace().HitPos.y) .. ", " .. math.floor(LocalPlayer():GetEyeTrace().HitPos.z) .. " )")
 end
 concommand.Add("safezone_grablocation", GrabLoc)
 

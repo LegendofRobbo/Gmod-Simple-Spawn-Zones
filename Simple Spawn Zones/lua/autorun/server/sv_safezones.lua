@@ -31,7 +31,7 @@ local function LoadMapSetup()
 		end
 	end
 
-	if !loadedmap then 
+	if !loadedmap then
 		MsgC(Color(255,50,0), "Simple Safezones: no config detected for this map! check addons/Simple Spawn Zones/sh_safezones.lua for more info\n")
 	end
 
@@ -49,25 +49,30 @@ local function BoxCheck()
 
 for k, v in pairs(MapSZs) do
 	local checkmydubs = ents.FindInBox(v[1], v[2])
-
+	local BoxConfig = table.Copy(SafezonesConfig)
+	if v[3] then
+		for k2,v2 in pairs(v[3]) do
+				BoxConfig[k2] = v2 -- Only overwrite what's been changed, if anything. This allows for per-zone config changes without having to copy paste the ENTIRE config.'
+		end
+	end
 	for k, v in pairs(checkmydubs) do
 	if v:IsPlayer() and v:IsValid() then
-		if not SafezonesConfig["RecurringProtection"] and v.PreviouslyProtected then return end
+		if not BoxConfig["RecurringProtection"] and v.PreviouslyProtected then return end
 		v:SetNWBool("SpawnProtected", true )
-		if SafezonesConfig["BlockTracesToPlayer"] then v:SetNotSolid( true ) end
-		if SafezonesConfig["TransparencyEffect"] then
+		if BoxConfig["BlockTracesToPlayer"] then v:SetNotSolid( true ) end
+		if BoxConfig["TransparencyEffect"] then
 			local c = v:GetColor()
 			v:SetRenderMode(RENDERMODE_TRANSALPHA)
 			v:SetColor(Color(c.r, c.g, c.b, 100))
 		end
 
-		timer.Create("spawnprot_"..v:UniqueID(), SafezonesConfig["ProtectionDelay"], 1, function()
+		timer.Create("spawnprot_"..v:UniqueID(), BoxConfig["ProtectionDelay"], 1, function()
 			if !v:IsValid() then return false end
 			v:SendLua([[if Legs then Legs:SetUp() end]]) -- this is a really dodgy solution but i can't really think of a better way because this timer doesnt exist on the client
 			v:SetNWBool("SpawnProtected", false)
-			if SafezonesConfig["BlockTracesToPlayer"] then v:SetNotSolid( false ) end
-			if !SafezonesConfig["RecurringProtection"] then v.PreviouslyProtected = true end
-			if SafezonesConfig["TransparencyEffect"] then
+			if BoxConfig["BlockTracesToPlayer"] then v:SetNotSolid( false ) end
+			if !BoxConfig["RecurringProtection"] then v.PreviouslyProtected = true end
+			if BoxConfig["TransparencyEffect"] then
 				local c = v:GetColor()
 				v:SetRenderMode(RENDERMODE_NORMAL)
 				v:SetColor(Color(c.r, c.g, c.b, 100))
@@ -75,19 +80,19 @@ for k, v in pairs(MapSZs) do
 		end)
 	end
 
-	if SafezonesConfig["RemoveProps"] and ((v:GetClass() == "prop_physics" and !v.jailWall) or string.find(v:GetClass(), "wire")) then
+	if BoxConfig["RemoveProps"] and ((v:GetClass() == "prop_physics" and !v.jailWall) or string.find(v:GetClass(), "wire")) then
 		v:Remove()
 	end
 
-	if SafezonesConfig["RemoveVehicles"] and v:IsVehicle() then
+	if BoxConfig["RemoveVehicles"] and v:IsVehicle() then
 		v:Remove()
 	end
 
-	if SafezonesConfig["RemoveNPCs"] and (v:IsNPC() or v.Type == "nextbot") then
+	if BoxConfig["RemoveNPCs"] and (v:IsNPC() or v.Type == "nextbot") then
 		v:Remove()
 	end
 
-	if SafezonesConfig["RemovePysobjects"] and v:GetPhysicsObject():IsValid() and !v:IsPlayer() and !v.jailWall then
+	if BoxConfig["RemovePysobjects"] and v:GetPhysicsObject():IsValid() and !v:IsPlayer() and !v.jailWall then
 		v:Remove()
 	end
 
